@@ -39,13 +39,19 @@ export default function BookingForm() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (form.honeypot) return;
+    console.log("handleSubmit fired. form state:", form);
 
     const errs = validate();
-    if (Object.keys(errs).length > 0) { setErrors(errs); return; }
+    console.log("Validation errors:", errs);
+    if (Object.keys(errs).length > 0) { 
+      setErrors(errs); 
+      return; 
+    }
 
     setLoading(true);
     setErrors({});
+
+    console.log("Submitting form:", form);
 
     try {
       const accessKey = WEB3FORMS_CONFIG.accessKey;
@@ -64,12 +70,15 @@ export default function BookingForm() {
         formData.append("preferred_time", form.time || "Flexible");
         formData.append("notes", form.notes || "None");
 
+        console.log("Posting to Web3Forms with key:", accessKey);
         const response = await fetch("https://api.web3forms.com/submit", {
           method: "POST",
           body: formData,
         });
 
         const result = await response.json();
+        console.log("Web3Forms response:", result);
+
         if (!result.success) {
           throw new Error(result.message || "Failed to send request");
         }
@@ -79,6 +88,7 @@ export default function BookingForm() {
 
       navigate("/thank-you", { state: { name: form.name } });
     } catch (err) {
+      console.error("Submission failed:", err);
       setErrors({ submit: err.message || "Something went wrong. Please try again or call us directly." });
     } finally {
       setLoading(false);
@@ -192,15 +202,6 @@ export default function BookingForm() {
               </div>
             ) : (
               <form onSubmit={handleSubmit} noValidate aria-label="Appointment request form">
-                {/* Honeypot */}
-                <input
-                  type="text" name="website" value={form.honeypot}
-                  onChange={(e) => set("honeypot", e.target.value)}
-                  tabIndex={-1} aria-hidden="true"
-                  className="absolute left-[-9999px] opacity-0 h-0 overflow-hidden"
-                  autoComplete="off"
-                />
-
                 <div className="space-y-5">
                   {/* Name */}
                   <div>

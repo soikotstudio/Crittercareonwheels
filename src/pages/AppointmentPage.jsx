@@ -52,9 +52,10 @@ export default function AppointmentPage() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (form.honeypot) return;
+    console.log("AppointmentPage handleSubmit fired. Form:", form);
 
     const errs = validate();
+    console.log("AppointmentPage validation errors:", errs);
     if (Object.keys(errs).length > 0) {
       setErrors(errs);
       return;
@@ -243,15 +244,6 @@ export default function AppointmentPage() {
                 </div>
               ) : (
                 <form onSubmit={handleSubmit} noValidate aria-label="Appointment request form">
-                  {/* Honeypot */}
-                  <input
-                    type="text" name="website" value={form.honeypot}
-                    onChange={(e) => set("honeypot", e.target.value)}
-                    tabIndex={-1} aria-hidden="true"
-                    className="absolute left-[-9999px] opacity-0 h-0 overflow-hidden"
-                    autoComplete="off"
-                  />
-
                   <div className="space-y-5">
                     {/* Full Name */}
                     <div>
