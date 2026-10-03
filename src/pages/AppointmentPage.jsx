@@ -74,7 +74,10 @@ export default function AppointmentPage() {
         formData.append("from_name", "Critter Care on Wheels Booking");
         formData.append("name", form.name);
         formData.append("phone", form.phone);
-        formData.append("email", form.email || "No email provided");
+        formData.append("email", form.email || "");
+        if (form.email) {
+          formData.append("replyto", form.email);
+        }
         formData.append("address", form.address);
         formData.append("services", form.services || "Not specified");
         formData.append("preferred_date", form.date || "Flexible");
