@@ -1,0 +1,39 @@
+@import url('https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,700;12..96,800&family=Figtree:wght@400;500;600&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: "Figtree", "Inter", system-ui, sans-serif;
+    background-color: #FFF8E7;
+    color: #1a1a2e;
+  }
+  h1, h2, h3, h4 {
+    font-family: "Bricolage Grotesque", "Fredoka", system-ui, sans-serif;
+  }
+  :focus-visible {
+    outline: 3px solid #4B3FD8;
+    outline-offset: 3px;
+  }
+  /* transitions are handled per-component with Tailwind utility classes */
+}
+
+@layer utilities {
+  .hero-heading {
+    font-size: clamp(2.5rem, 6vw, 4.5rem);
+    line-height: 1.05;
+    letter-spacing: -0.02em;
+  }
+  .scrollbar-hide::-webkit-scrollbar { display: none; }
+  .scrollbar-hide { -ms-overflow-style: none; scrollbar-width: none; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, ::before, ::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}
