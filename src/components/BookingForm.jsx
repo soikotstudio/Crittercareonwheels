@@ -51,27 +51,22 @@ export default function BookingForm() {
       const accessKey = WEB3FORMS_CONFIG.accessKey;
 
       if (accessKey) {
-        const payload = {
-          access_key: accessKey,
-          subject: `🐾 New Pet Care Appointment Request from ${form.name}`,
-          from_name: "Critter Care on Wheels Booking",
-          name: form.name,
-          phone: form.phone,
-          email: form.email || "No email provided",
-          address: form.address,
-          services: form.services || "Not specified",
-          preferred_date: form.date || "Flexible",
-          preferred_time: form.time || "Flexible",
-          notes: form.notes || "None",
-        };
+        const formData = new FormData();
+        formData.append("access_key", accessKey);
+        formData.append("subject", `🐾 New Pet Care Appointment Request from ${form.name}`);
+        formData.append("from_name", "Critter Care on Wheels Booking");
+        formData.append("name", form.name);
+        formData.append("phone", form.phone);
+        formData.append("email", form.email || "No email provided");
+        formData.append("address", form.address);
+        formData.append("services", form.services || "Not specified");
+        formData.append("preferred_date", form.date || "Flexible");
+        formData.append("preferred_time", form.time || "Flexible");
+        formData.append("notes", form.notes || "None");
 
         const response = await fetch("https://api.web3forms.com/submit", {
           method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            Accept: "application/json",
-          },
-          body: JSON.stringify(payload),
+          body: formData,
         });
 
         const result = await response.json();
@@ -79,7 +74,6 @@ export default function BookingForm() {
           throw new Error(result.message || "Failed to send request");
         }
       } else {
-        // Fallback demo delay when access key hasn't been pasted yet
         await new Promise((r) => setTimeout(r, 600));
       }
 
