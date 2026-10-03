@@ -68,7 +68,7 @@ export const SITE_CONFIG = {
 };
 
 export const WEB3FORMS_CONFIG = {
-  accessKey: import.meta.env.VITE_WEB3FORMS_ACCESS_KEY || "",
+  accessKey: import.meta.env.VITE_WEB3FORMS_ACCESS_KEY || "5e621aad-c445-4da1-9425-559eb69bed95",
 };
 
 export const SUPABASE_CONFIG = {
